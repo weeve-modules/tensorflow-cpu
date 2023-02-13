@@ -1,10 +1,10 @@
-FROM python:3.8-slim
+FROM chaowen/tensorflow:2.1.0
 
 # copy docker-entrypoint and requirements to initialize multi-stage build
 COPY ./docker/docker-entrypoint.sh ./requirements.txt /app/
 
 # implement multi-stage build to leverage build cache (does not re-install packages when code changes)
-RUN pip install -r /app/requirements.txt
+RUN pip3 install -r /app/requirements.txt
 
 # copy source code
 COPY ./src /app/src
