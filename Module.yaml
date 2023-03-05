@@ -19,13 +19,6 @@ envs:
     type: 'text'
     options: []
     dependencies: []
-  - name: Downloaded Model ZIP Filename
-    key: DOWNLOADED_MODEL_ZIP_FILENAME
-    description: If the model is stored online, then provide model's zip filename.
-    value: 'my-model.zip'
-    type: 'text'
-    options: []
-    dependencies: []
   - name: Model Folderpath
     key: MODEL_LOCAL_FOLDERPATH
     description: If model is stored in the local filesystem (above field for URL was left empty), then provide a path to the folder containing the model.
@@ -34,7 +27,7 @@ envs:
     options: []
     dependencies: []
   - name: Keras
-    key: WITH_KERAS
+    key: IS_KERAS
     description: Whether the model is Keras or not.
     value: 'True'
     type: 'select'
@@ -49,8 +42,8 @@ envs:
     type: 'text'
     options: []
     dependencies: []
-  - name: Ordered Labels
-    key: ORDERED_LABELS
+  - name: Input Labels
+    key: INPUT_LABELS
     description: Input data labels in the order of feeding into the model. Later a TensorFlow tensor will be created to feed that data into the model in the given order.
     value: 'temperature, volume, pressure'
     type: 'text'
@@ -65,9 +58,7 @@ envs:
     dependencies: []
 ports: []
 envPorts: []
-mounts:
-  - container: '/local_model'
-    host: 'MODEL_LOCAL_FOLDERPATH'
+mounts: []
 envMounts:
   - MODEL_LOCAL_FOLDERPATH
 devices: []

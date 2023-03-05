@@ -1,11 +1,11 @@
 # TensorFlow CPU
 
-|                |                                       |
-| -------------- | ------------------------------------- |
-| Name           | tensorflow-cpu                           |
-| Version        | v1.0.0                                |
+|           |                                                                                     |
+| --------- | ----------------------------------------------------------------------------------- |
+| Name      | tensorflow-cpu                                                                      |
+| Version   | v1.0.0                                                                              |
 | DockerHub | [weevenetwork/tensorflow-cpu](https://hub.docker.com/r/weevenetwork/tensorflow-cpu) |
-| Authors        | Jakub Grzelak                    |
+| Authors   | Jakub Grzelak                                                                       |
 
 - [TensorFlow CPU](#tensorflow-cpu)
   - [Description](#description)
@@ -24,22 +24,20 @@ If the model is Keras, then the module uses high-level API to load the model. Ot
 
 The module uses a function provided in Prediction Function config (env FORWARD_PROP_FUNCTION) to make a prediction. For instance, if Prediction Function is `predict` then the module uses `model.predict(X)` to make a prediction, if Prediction function is `__call__` then `model(X)`, etc.
 
-
 ## Environment Variables
 
 ### Module Specific
 
 The following module configurations can be provided in a data service designer section on weeve platform:
 
-| Name                 | Environment Variables     | type     | Description                                              |
-| -------------------- | ------------------------- | -------- | -------------------------------------------------------- |
-| Model ZIP Download URL    | MODEL_ZIP_DOWNLOAD_URL         | string   | If model is stored online, then provide a download URL to parse the model in a zip file. Leave empty field to search for the model in the local filesystem.            |
-| Downloaded Model ZIP Filename    | DOWNLOADED_MODEL_ZIP_FILENAME         | string   | If the model is stored online, then provide model's zip filename.            |
-| Model Folderpath    | MODEL_LOCAL_FOLDERPATH         | string   | If model is stored in the local filesystem (above field for URL was left empty), then provide a path to the folder containing the model.           |
-| Keras    | WITH_KERAS         | string   | Whether the model is Keras or not.           |
-| Prediction Function    | FORWARD_PROP_FUNCTION         | string   | Name of the prediction (forward propagation function), i.e. `predict` or `__call__`          |
-| Ordered Labels    | ORDERED_LABELS         | string   | Input data labels in the order of feeding into the model. Later a TensorFlow tensor will be created to feed that data into the model in the given order.           |
-| Output Label    | OUTPUT_LABEL         | string   | The output label at which data is dispatched.           |
+| Name                   | Environment Variables  | type   | Description                                                                                                                                                 |
+| ---------------------- | ---------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Model ZIP Download URL | MODEL_ZIP_DOWNLOAD_URL | string | If model is stored online, then provide a download URL to parse the model in a zip file. Leave empty field to search for the model in the local filesystem. |
+| Model Folderpath       | MODEL_LOCAL_FOLDERPATH | string | If model is stored in the local filesystem (above field for URL was left empty), then provide a path to the folder containing the model.                    |
+| Keras                  | IS_KERAS               | string | Whether the model is Keras or not.                                                                                                                          |
+| Prediction Function    | FORWARD_PROP_FUNCTION  | string | Name of the prediction (forward propagation function), i.e. `predict` or `__call__`                                                                         |
+| Input Labels           | INPUT_LABELS           | string | Input data labels in the order of feeding into the model. Later a TensorFlow tensor will be created to feed that data into the model in the given order.    |
+| Output Label           | OUTPUT_LABEL           | string | The output label at which data is dispatched.                                                                                                               |
 
 ### Set by the weeve Agent on the edge-node
 
@@ -48,8 +46,8 @@ Other features required for establishing the inter-container communication betwe
 | Environment Variables | type   | Description                                    |
 | --------------------- | ------ | ---------------------------------------------- |
 | MODULE_NAME           | string | Name of the module                             |
-| MODULE_TYPE           | string | Type of the module (Input, Processing, Output)  |
-| EGRESS_URLS            | string | HTTP ReST endpoints for the next module         |
+| MODULE_TYPE           | string | Type of the module (Input, Processing, Output) |
+| EGRESS_URLS           | string | HTTP ReST endpoints for the next module        |
 | INGRESS_HOST          | string | Host to which data will be received            |
 | INGRESS_PORT          | string | Port to which data will be received            |
 
@@ -58,13 +56,14 @@ Other features required for establishing the inter-container communication betwe
 ```txt
 bottle
 requests
+tensorflow-cpu
 ```
 
 ## Input
 
 Input to this module is:
 
-* JSON body single object, example:
+-   JSON body single object, example:
 
 ```json
 {
@@ -74,7 +73,7 @@ Input to this module is:
 }
 ```
 
-* array of JSON body objects, example:
+-   array of JSON body objects, example:
 
 ```json
 [
@@ -93,9 +92,9 @@ Input to this module is:
 
 ## Output
 
-Output of this module is 
+Output of this module is
 
-* JSON body single object, example:
+-   JSON body single object, example:
 
 ```json
 {
@@ -103,7 +102,7 @@ Output of this module is
 }
 ```
 
-* array of JSON body objects, example:
+-   array of JSON body objects, example:
 
 ```json
 [

@@ -1,3 +1,4 @@
+import os
 import requests
 import zipfile
 from logging import getLogger
@@ -17,14 +18,21 @@ def download_model():
             # save the model
             if resp.status_code == 200:
                 log.info(f"Saving the zip model inside Docker container ...")
-                with open(PARAMS["DOWNLOADED_MODEL_ZIP_FILENAME"], 'wb') as model_file:
+                with open('tf_model.zip', 'wb') as model_file:
                     model_file.write(resp.content)
                 log.info("Successfully downloaded the model.")
 
                 # un-zip the model
                 log.info("Unzipping the model ...")
-                with zipfile.ZipFile(PARAMS["DOWNLOADED_MODEL_ZIP_FILENAME"], 'r') as zip_ref:
+                file_list_before_unzipping = os.listdir()
+                with zipfile.ZipFile('tf_model.zip', 'r') as zip_ref:
                     zip_ref.extractall()
+                    extracted_folders = [x for x in os.listdir() if x not in file_list_before_unzipping]
+                    if len(extracted_folders) > 0:
+                        PARAMS["EXTRACTED_MODEL_PATH"] = extracted_folders[0]
+                    else:
+                        log.error("Could not extract the model from zipped file. Probably empty archive.")
+
                 log.info("Successfully unzipped the model.")
 
             else:

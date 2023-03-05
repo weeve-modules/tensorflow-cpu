@@ -8,10 +8,10 @@ log = getLogger("load_model")
 
 def load_model():
     # flag whether use downloaded model or locally stored model (for locally stored, MODEL_LOCAL_FOLDERPATH env should be volume bind to container ./local_model)
-    model_folder_name = PARAMS["DOWNLOADED_MODEL_ZIP_FILENAME"][:PARAMS["DOWNLOADED_MODEL_ZIP_FILENAME"].find('.zip')] if PARAMS["DOWNLOADED_MODEL_ZIP_FILENAME"] else '/local_model'
+    model_folder_name = PARAMS["EXTRACTED_MODEL_PATH"] if PARAMS["MODEL_ZIP_DOWNLOAD_URL"] else PARAMS["MODEL_LOCAL_FOLDERPATH"]
 
     try:
-        if PARAMS["WITH_KERAS"]:
+        if PARAMS["IS_KERAS"]:
             # high-level API loading: https://www.tensorflow.org/guide/keras/save_and_serialize?hl=en
             log.info(f"Loading Keras model: {model_folder_name} ...")
             model = tf.keras.models.load_model(model_folder_name)
