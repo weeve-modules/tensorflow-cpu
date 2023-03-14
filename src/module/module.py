@@ -13,7 +13,10 @@ from .params import PARAMS
 
 log = getLogger("module")
 
-FORWARD_PROP_FUNCTION = getattr(load_model(), PARAMS["FORWARD_PROP_FUNCTION"])
+try:
+    FORWARD_PROP_FUNCTION = getattr(load_model(), PARAMS["FORWARD_PROP_FUNCTION"])
+except AttributeError:
+    log.error(f"Error. TensorFlow model does not have an attribute {PARAMS["FORWARD_PROP_FUNCTION"]}. Check provided forward propagation function name.")
 
 def module_main(received_data: any) -> [any, str]:
     """
