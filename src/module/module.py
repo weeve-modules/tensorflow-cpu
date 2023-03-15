@@ -16,7 +16,11 @@ log = getLogger("module")
 try:
     FORWARD_PROP_FUNCTION = getattr(load_model(), PARAMS["FORWARD_PROP_FUNCTION"])
 except AttributeError:
-    log.error(f"Error. TensorFlow model does not have an attribute {PARAMS["FORWARD_PROP_FUNCTION"]}. Check provided forward propagation function name.")
+    log.error(
+        f"Error. TensorFlow model does not have an attribute {PARAMS['FORWARD_PROP_FUNCTION']}. Check provided forward propagation function name."
+    )
+    exit(1)
+
 
 def module_main(received_data: any) -> [any, str]:
     """
@@ -37,12 +41,21 @@ def module_main(received_data: any) -> [any, str]:
     try:
         with tf.device("cpu"):
             if type(received_data) == list:
-                X = np.array([[data[label] for label in PARAMS["INPUT_LABELS"]] for data in received_data])
+                X = np.array(
+                    [
+                        [data[label] for label in PARAMS["INPUT_LABELS"]]
+                        for data in received_data
+                    ]
+                )
                 y_hat = FORWARD_PROP_FUNCTION(X).data.tolist()
                 processed_data = [{PARAMS["OUTPUT_LABEL"]: y[0]} for y in y_hat]
             else:
-                X = np.array([received_data[label] for label in PARAMS["INPUT_LABELS"]]).reshape(1,-1)
-                processed_data = {PARAMS["OUTPUT_LABEL"]: FORWARD_PROP_FUNCTION(X).item()}
+                X = np.array(
+                    [received_data[label] for label in PARAMS["INPUT_LABELS"]]
+                ).reshape(1, -1)
+                processed_data = {
+                    PARAMS["OUTPUT_LABEL"]: FORWARD_PROP_FUNCTION(X).item()
+                }
 
         return processed_data, None
 

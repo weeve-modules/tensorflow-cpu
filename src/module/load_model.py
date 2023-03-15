@@ -6,9 +6,14 @@ from .params import PARAMS
 setup_logging()
 log = getLogger("load_model")
 
+
 def load_model():
     # flag whether use downloaded model or locally stored model (for locally stored, MODEL_LOCAL_FOLDERPATH env should be volume bind to container ./local_model)
-    model_folder_name = PARAMS["EXTRACTED_MODEL_PATH"] if PARAMS["MODEL_ZIP_DOWNLOAD_URL"] else PARAMS["MODEL_LOCAL_FOLDERPATH"]
+    model_folder_name = (
+        PARAMS["EXTRACTED_MODEL_PATH"]
+        if PARAMS["MODEL_ZIP_DOWNLOAD_URL"]
+        else PARAMS["MODEL_LOCAL_FOLDERPATH"]
+    )
 
     try:
         if PARAMS["IS_KERAS"]:
